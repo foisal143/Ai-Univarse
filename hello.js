@@ -1,4 +1,4 @@
-let allAi = [];
+let allAiData = [];
 // load data for ai univarse
 const loadAiData = async limit => {
   try {
@@ -7,7 +7,7 @@ const loadAiData = async limit => {
     );
     const data = await res.json();
     showAiDatas(data.data.tools, limit);
-    allAi = data.data.tools;
+    allAiData = data.data.tools;
   } catch (er) {
     console.log(er);
   }
@@ -26,7 +26,6 @@ const showAiDatas = (data, limit) => {
 
   document.getElementById('loader').classList.remove('hidden');
   limitData.forEach(element => {
-    console.log(element);
     const { published_in, image, id, features, name } = element;
     const [one, two, three] = features;
     aiContainer.innerHTML += `
@@ -152,4 +151,15 @@ const showAiDetails = data => {
     document.querySelector('.accuracy').classList.remove('hidden');
   }
 };
+// sort by date btn section
+document.getElementById('sortByDate').addEventListener('click', () => {
+  const newAiData = allAiData.sort(custom_sort);
+  showAiDatas(newAiData, 6);
+});
+// sorting the array function
+function custom_sort(a, b) {
+  return (
+    new Date(a.published_in).getTime() - new Date(b.published_in).getTime()
+  );
+}
 loadAiData(6);
