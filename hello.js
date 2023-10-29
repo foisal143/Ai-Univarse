@@ -93,8 +93,8 @@ const showAiDetails = data => {
 
   const detailsContainer = document.getElementById('modalBody');
   detailsContainer.innerHTML = `
-   <div class=" p-5 w-[60%] border border-red-500 rounded-md">
-            <h4 class="font-semibold text-2xl">${description}</h4>
+   <div class=" p-5 w-full md:w-[60%] border border-red-500 rounded-md">
+            <h4 class="font-semibold md:text-2xl">${description}</h4>
             <div class="flex my-5 px-5 gap-5 justify-between items-center">
               <p class="text-center font-semibold text-green-500">${
                 basic.price
@@ -134,12 +134,12 @@ const showAiDetails = data => {
                </div>
             </div>
           </div>
-          <div class="p-8 w-2/3">
+          <div class="p-8 w-full md:w-2/3">
             <figure class="relative rounded-md">
            <span class="absolute accuracy right-1 top-2 rounded text-white bg-red-600 px-5 py-1">${accuracyFull}% accuracy</span>
               <img class="rounded-md" src="${image_link[0]}" alt="">
             </figure>
-            <div class="text-center mt-5 w-11/12 mx-auto">
+            <div class="text-center mt-5 w-full md:w-11/12 mx-auto">
             <h3 class="text-2xl font-semibold">${input}</h3>
             <p>${output}</p>
             </div>
