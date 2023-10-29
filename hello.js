@@ -17,6 +17,7 @@ const loadAiData = async limit => {
 const showAiDatas = (data, limit) => {
   const aiContainer = document.getElementById('aiContainer');
   const limitData = data.slice(0, limit);
+  document.getElementById('loader').classList.remove('hidden');
   limitData.forEach(element => {
     console.log(element);
     const { published_in, image, id, features, name } = element;
@@ -25,7 +26,7 @@ const showAiDatas = (data, limit) => {
     <div class="card  bg-base-100 shadow-xl">
   <figure><img src="${
     image ? image : 'https://picsum.photos/200/300/?blur'
-  }" alt="Shoes" /></figure>
+  }" alt="${name}" /></figure>
   <div class="card-body">
     <h2 class="card-title ">Features</h2>
     <ol class="list-decimal mb-5 ms-5">
@@ -50,6 +51,7 @@ const showAiDatas = (data, limit) => {
   </div>
 </div>
     `;
+    document.getElementById('loader').classList.add('hidden');
   });
 };
 loadAiData(6);
