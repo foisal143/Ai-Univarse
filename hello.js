@@ -16,7 +16,14 @@ const loadAiData = async limit => {
 // show data for
 const showAiDatas = (data, limit) => {
   const aiContainer = document.getElementById('aiContainer');
+  aiContainer.innerHTML = '';
+  if (limit && data.length > 6) {
+    document.getElementById('ShowMore').classList.remove('hidden');
+  } else {
+    document.getElementById('ShowMore').classList.add('hidden');
+  }
   const limitData = data.slice(0, limit);
+
   document.getElementById('loader').classList.remove('hidden');
   limitData.forEach(element => {
     console.log(element);
@@ -54,4 +61,9 @@ const showAiDatas = (data, limit) => {
     document.getElementById('loader').classList.add('hidden');
   });
 };
+
+// show more btn section
+document.getElementById('ShowMore').addEventListener('click', () => {
+  loadAiData();
+});
 loadAiData(6);
