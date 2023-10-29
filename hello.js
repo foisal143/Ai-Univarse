@@ -29,7 +29,7 @@ const showAiDatas = (data, limit) => {
     const { published_in, image, id, features, name } = element;
     const [one, two, three] = features;
     aiContainer.innerHTML += `
-    <div class="card  bg-base-100 shadow-xl">
+    <div class="card  bg-base-100 border shadow-xl">
   <figure><img src="${
     image ? image : 'https://picsum.photos/200/300/?blur'
   }" alt="${name}" /></figure>
@@ -154,7 +154,7 @@ const showAiDetails = data => {
 // sort by date btn section
 document.getElementById('sortByDate').addEventListener('click', () => {
   const newAiData = allAiData.sort(custom_sort);
-  showAiDatas(newAiData, 6);
+  showAiDatas(newAiData);
 });
 // sorting the array function
 function custom_sort(a, b) {
@@ -162,4 +162,7 @@ function custom_sort(a, b) {
     new Date(a.published_in).getTime() - new Date(b.published_in).getTime()
   );
 }
-loadAiData(6);
+// body onload event here
+const loadBody = () => {
+  loadAiData(6);
+};
