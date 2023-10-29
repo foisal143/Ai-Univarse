@@ -1,5 +1,4 @@
-// const allData = `https://openapi.programming-hero.com/api/ai/tools`;
-// const idData = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+let allAi = [];
 // load data for ai univarse
 const loadAiData = async limit => {
   try {
@@ -8,6 +7,7 @@ const loadAiData = async limit => {
     );
     const data = await res.json();
     showAiDatas(data.data.tools, limit);
+    allAi = data.data.tools;
   } catch (er) {
     console.log(er);
   }
@@ -26,6 +26,7 @@ const showAiDatas = (data, limit) => {
 
   document.getElementById('loader').classList.remove('hidden');
   limitData.forEach(element => {
+    console.log(element);
     const { published_in, image, id, features, name } = element;
     const [one, two, three] = features;
     aiContainer.innerHTML += `
@@ -76,6 +77,79 @@ const loadDetails = id => {
 
 // show details in a modal
 const showAiDetails = data => {
-  console.log(data);
+  const {
+    image_link,
+    description,
+    pricing,
+    features,
+    integrations,
+    input_output_examples,
+    accuracy,
+  } = data;
+  const [basic, pro, enterprice] = pricing;
+  const [one, two, three] = integrations;
+  const [question] = input_output_examples;
+  const { output, input } = question;
+  const accuracyFull = accuracy.score * 100;
+
+  const detailsContainer = document.getElementById('modalBody');
+  detailsContainer.innerHTML = `
+   <div class=" p-5 w-[60%] border border-red-500 rounded-md">
+            <h4 class="font-semibold text-2xl">${description}</h4>
+            <div class="flex my-5 px-5 gap-5 justify-between items-center">
+              <p class="text-center font-semibold text-green-500">${
+                basic.price
+              } <br>
+              <span> ${basic.plan ? basic.plan : 'No data Found'} </span>
+              </p>
+              <p class="text-center font-semibold text-yellow-500">${
+                pro.price
+              } <br>
+              <span> ${pro.plan} </span>
+              </p>
+              <p class="text-center font-semibold text-red-500">${enterprice.price.slice(
+                0,
+                10
+              )} <br>
+              <span> ${enterprice.plan} </span>
+              </p>
+            </div>
+            <div class="flex justify-between items-center gap-5 ">
+              <div class="features">
+               <h3 class="text-2xl font-semibold">Features</h3>
+               <ol class="list-disc ms-4">
+                  <li>${features[1].feature_name}</li>
+                  <li>${features[2].feature_name}</li>
+                  <li>${features[3].feature_name}</li>
+                  
+               </ol>
+              </div>
+              <div class="integration">
+               <h3 class="text-2xl font-semibold">Integrations</h3>
+               <ol class="list-disc ms-4">
+                  <li>${one}</li>
+                  <li>${two}</li>
+                  <li>${three}</li>
+                  
+               </ol>
+               </div>
+            </div>
+          </div>
+          <div class="p-8 w-2/3">
+            <figure class="relative rounded-md">
+           <span class="absolute accuracy right-1 top-2 rounded text-white bg-red-600 px-5 py-1">${accuracyFull}% accuracy</span>
+              <img class="rounded-md" src="${image_link[0]}" alt="">
+            </figure>
+            <div class="text-center mt-5 w-11/12 mx-auto">
+            <h3 class="text-2xl font-semibold">${input}</h3>
+            <p>${output}</p>
+            </div>
+          </div>
+  `;
+  if (accuracy.score === null) {
+    document.querySelector('.accuracy').classList.add('hidden');
+  } else {
+    document.querySelector('.accuracy').classList.remove('hidden');
+  }
 };
 loadAiData(6);
