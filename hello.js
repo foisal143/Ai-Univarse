@@ -26,7 +26,6 @@ const showAiDatas = (data, limit) => {
 
   document.getElementById('loader').classList.remove('hidden');
   limitData.forEach(element => {
-    console.log(element);
     const { published_in, image, id, features, name } = element;
     const [one, two, three] = features;
     aiContainer.innerHTML += `
@@ -52,7 +51,7 @@ const showAiDatas = (data, limit) => {
       </svg> ${published_in}</p>
     </div>
     <div class="">
-    <button class="text-red-500"><i class="fa-solid fa-arrow-right-long"></i></button>
+    <button onclick="my_modal_4.showModal(),loadDetails('${id}')" class="text-red-500"><i class="fa-solid fa-arrow-right-long"></i></button>
     </div>
   </div>
   </div>
@@ -66,4 +65,17 @@ const showAiDatas = (data, limit) => {
 document.getElementById('ShowMore').addEventListener('click', () => {
   loadAiData();
 });
+// load details section
+const loadDetails = id => {
+  const idData = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+  fetch(idData)
+    .then(res => res.json())
+    .then(data => showAiDetails(data.data))
+    .catch(er => console.log(er));
+};
+
+// show details in a modal
+const showAiDetails = data => {
+  console.log(data);
+};
 loadAiData(6);
